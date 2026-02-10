@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+    <form action="/api/todo" method="post">
+        <input type="text" name="task" placeholder="Enter a task">
+        <button type="submit">Add</button>
+        
+    </form>
+   
+     <% todoitems.forEach((ele)=>{ %>
+      <li>  <%= ele.task %>  </li>
+      <button><a href="api/todo/<%=ele.id%>">Delete</a></button>
+    <% }) %>
+</body>
+</html>
