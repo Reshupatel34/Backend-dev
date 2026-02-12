@@ -8,6 +8,12 @@
 <body>
      <%  image.forEach((ele)=>{  %>
            <img src="/<%=ele%>" width="200px" height="200px">
+
+
       <% }) %>
+
+      <% for(let i=1;i<=totalpages;i++){  %>
+        <a href="/index?page=<%=i%>"></a>
+    <%  }%>
 </body>
 </html>

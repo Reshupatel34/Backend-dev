@@ -3,16 +3,28 @@ import fs from 'fs';
 
 const app=express();
 
-app.set('view engines','ejs');
+app.set("view engine",'ejs');
 app.use(express.static('public'));
 
-app.get('/index',()=>{
-    const file=fs.readdirync('./public');
+app.get('/index',(req,res)=>{
 
-    res.render("index",{image:file});
+    const files=fs.readdirSync('./public');
+
+    const page=parseInt(req.query.page)||1;
+    const limit=1;
+    const totalpages=Math.ceil(files.length/limit);
+
+    const startIdx=(page-1)*limit;
+    const endIdx=page*limit;
+    const paginationFiles=files.slice(startIdx,endIdx);
+
+
+    res.render("index",{image:paginationFiles,currpage:page,totalpages});
      
 });
+
 
 app.listen(3000,()=>{
     console.log("Server is running on port 3000");
 });
+
