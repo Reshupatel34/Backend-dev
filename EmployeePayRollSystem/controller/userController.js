@@ -16,14 +16,19 @@ export let showUser = (req,res) =>{
 
 export let createUser = (req,res)=>{
     // destructuring
-    const {name,email,department,basicSalary}=req.body;
-    let newUser={id:employeeData.length+1,name:name,email:email,departement:department,basicSalary:basicSalary}
+    const {name,gender,department,email,basicSalary,startDate}=req.body;
+    let newUser={id:employeeData.length+1,name:name,gender:gender,email:email,department:department,basicSalary:basicSalary,startDate:startDate}
     employeeData.push(newUser);
 
-    res.json({
-        message:"New User Created",
-        newUser
-    });
+    // res.json({
+    //     message:"New User Created",
+    //     newUser
+    // });
+    res.redirect('/');
+}
+
+export let addPage=(req,res)=>{
+    res.render('add.ejs');
 }
 
 
