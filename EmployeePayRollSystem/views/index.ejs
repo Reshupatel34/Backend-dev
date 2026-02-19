@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+<h2>Employee Details</h2>
+
+<table border="1">
+    <tr>
+        
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Departement</th>
+        <th>Email</th>
+        <th>Salary</th>
+        <th>Start Date</th>
+        <th>Actions</th>
+    </tr>
+
+  <% employeeData.forEach((emp)=>{  %>
+        <tr>
+            <td> <%=emp.name %></td>
+            <td> <%= emp.gender %></td>
+            <td><%= emp.department %></td>
+             <td><%= emp.email %></td>
+              <td><%= emp.basicSalary %></td>
+               <td><%= emp.startDate %></td>
+               <td>
+                 <form action="/api/user/edit/<%= emp.id%>" method="GET">
+                  <button type="submit">Edit</button>
+                </form>
+                <form action="/api/user/delete/<%=emp.id%>" method="POST">
+                 <button type="submit">Delete</button>
+                </form>
+               
+            </td>
+        </tr>
+ <%  }) %>
+
+    <button>Add </button>
+</table>
+</body>
+</html>

@@ -40,9 +40,10 @@ export let deleteUser=(req,res)=>{
     }
 
     employeeData.splice(idx,1);
-    res.json({
-        message:"User Deleted"
-    });
+    // res.json({
+    //     message:"User Deleted"
+    // });
+    res.render('index.ejs',{employeeData});
 
 }
 
@@ -57,16 +58,17 @@ export let updateUser=(req,res)=>{
         });
     }
     user.name=req.body.name || user.name;
+     user.gender=req.body.gender || user.gender;
+     user.department=req.body.department || user.department;
     user.email=req.body.email || user.email;
-    user.department=req.body.department || user.department;
     user.basicSalary=req.body.basicSalary || user.basicSalary;
+    user.startDate=req.body.startDate || user.startDate;
 
-    res.json({
-        message:"User updated",
-        user
-    });
-
-
+    // res.json({
+    //     message:"User updated",
+    //     user
+    // });
+    res.redirect('/');
 
 }
 
@@ -91,4 +93,20 @@ export let salaryCount=(req,res)=>{
         salary
     });
 
+}
+
+// edit page user controller
+
+export let editPage=(req,res)=>{
+    const id=req.params.id;
+    const employee=employeeData.find(s=>s.id==id);
+    if(!employee){
+        res.json({
+            message:"Employee not found"
+        });
+    }
+
+    // if emp found then just render to the edit.ejs page with all the information of the curr employee
+    res.render('edit.ejs',{employee});
+    
 }
