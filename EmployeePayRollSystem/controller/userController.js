@@ -16,8 +16,8 @@ export let showUser = (req,res) =>{
 
 export let createUser = (req,res)=>{
     // destructuring
-    const {name,gender,department,email,basicSalary,startDate}=req.body;
-    let newUser={id:employeeData.length+1,name:name,gender:gender,email:email,department:department,basicSalary:basicSalary,startDate:startDate}
+    const {name,profile,gender,department,email,basicSalary,startDate}=req.body;
+    let newUser={id:employeeData.length+1,name:name,profile:profile,gender:gender,email:email,department:department,basicSalary:basicSalary,startDate:startDate}
     employeeData.push(newUser);
 
     // res.json({
@@ -64,6 +64,7 @@ export let updateUser=(req,res)=>{
     }
     user.name=req.body.name || user.name;
      user.gender=req.body.gender || user.gender;
+     user.profile=req.body.profile || user.profile;
      user.department=req.body.department || user.department;
     user.email=req.body.email || user.email;
     user.basicSalary=req.body.basicSalary || user.basicSalary;

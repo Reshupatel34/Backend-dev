@@ -3,16 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>EmployeePayRollSystem</title>
+    <style>
+      .tableHead{
+      background-color: rgb(56, 53, 53);
+      color:white
+
+      }  
+    </style>
+
 </head>
 <body>
    
 <h2>Employee Details</h2>
 
 <table border="1">
-    <tr>
+    <tr class="tableHead">
         
         <th>Name</th>
+        <th>Profile</th>
         <th>Gender</th>
         <th>Departement</th>
         <th>Email</th>
@@ -24,6 +33,10 @@
   <% employeeData.forEach((emp)=>{  %>
         <tr>
             <td> <%=emp.name %></td>
+           <td>
+   <img src="<%= emp.profile %>" width="150" height="150">
+</td>
+
             <td> <%= emp.gender %></td>
             <td><%= emp.department %></td>
              <td><%= emp.email %></td>
