@@ -113,7 +113,7 @@ const productCount=async()=>{
 productCount();
 
 // 2.the high-value filter
-// list only names and prices od products that cost more than 1000 dollars
+// list only names and prices of products that cost more than 1000 dollars
 
 const highValue=async()=>{
     const result=await product.aggregate([
