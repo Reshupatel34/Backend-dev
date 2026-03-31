@@ -1,5 +1,5 @@
 const express=require("express");
-
+// import express from 'express'
 const app=express();
 
 // middleware
@@ -57,6 +57,64 @@ app.get('/api/:id',(req,res)=>{
 });
 
 
+// updation
+
+// 1.using put
+app.put('/api/movies/:id',(req,res)=>{
+    const id=parseInt(req.params.id);
+    const movieIndex=movies.findIndex(s=>s.id===id);
+    if(movieIndex===-1){
+        return res.status(400).send("Does not exist");
+    }
+    const {title,actor}=req.body;
+
+    // validation
+    if(!title || !actor){
+        return res.status(400).json({error:"title and actor both are required"});
+    }
+
+    // replace the entire movie object
+    movies[movieIndex]={id,title,actor};
+
+    res.json(movies[movieIndex]);
+
+});
+
+// 2. using patch
+app.patch('/api/updatePatch/:id',(req,res)=>{
+    const id=req.params.id;
+    const index=movies.findIndex(s=>s.id==id);
+    if(!index){
+        return res.status(400).json({error:"Does not exist"});
+    }
+    const {title,actor}=req.body;
+
+    // validation
+    if(title!=undefined){
+        movies[index].title=title;
+    }
+    if(actor!=undefined){
+        movies[index].actor=actor;
+    }
+    res.send(movies[index]);
+});
+
+
+// Delete Operation
+app.delete('/api/delete/:id',(req,res)=>{
+  const id=parseInt(req.params.id);
+  const index=movies.findIndex(s=>s.id===id);
+  if(index===-1){
+    return res.status(400).json("movie does not exist");
+  }
+  const deletedMovie=movies.splice(index,1);
+  res.json({
+    message:"Movie deleted",deletedMovie});
+});
+
+
+
 app.listen(port,()=>{
     console.log("Server is running on port",port);
 });
+
