@@ -1,12 +1,13 @@
 let books=[];
 
-let newId=1;
+let nextId=1;
 
 
 export const getAllBooks=(req,res)=>{
     try{
         const {author,year,title,page,limit}=req.query;
         let filtered=books;
+        console.log("Filtered",filtered);
         if(title){
           filtered=  filtered.filter(s=>s.title.toLowerCase()===title.toLowerCase());
         }
@@ -14,17 +15,17 @@ export const getAllBooks=(req,res)=>{
             filtered=filtered.filter(s=>s.author.toLowerCase()===author.toLowerCase());
         }
         if(year){
-            filtered=filtered.filter(s=>s.year===year);
+            filtered=filtered.filter(s=>s.year===parseInt(year));
         }
         
 
         const pagination=parseInt(page) || 1;
         const limitNum=parseInt(limit) || filtered.length;
 
-        const start=(pagination-1)*limit;
-        const end=start+limit;
+        const start=(pagination-1)*limitNum;
+        const end=start+limitNum;
 
-        const paginatedData=filtered.splice(start,end);
+        const paginatedData=filtered.slice(start,end);
 
         res.json({
             total:filtered.length,
@@ -32,8 +33,6 @@ export const getAllBooks=(req,res)=>{
             limit:limitNum,
             data:paginatedData
         });
-
-
 
     }catch(error){
         res.status(400).send(error.message);
@@ -48,8 +47,20 @@ export const createBook=(req,res)=>{
     books.push(newBook);
     res.json({newBook});
     }catch(error){
-        res.send({error:message});
+        res.send({error:error.message});
     }
 }
 
 
+export const getBookById=(req,res)=>{
+   try{ const id=parseInt(req.params.id);
+    const newBook=books.find(s=>s.id===id);
+    if(id===-1){
+        return res.json({error:error.message});
+    }
+    // const newBook=books[idx];
+    res.send(newBook);
+}catch(error){
+         res.send("Error",error.message);
+    }
+}
