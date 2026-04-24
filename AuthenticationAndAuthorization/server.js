@@ -35,6 +35,8 @@ const app=express();
 // });
 
 
+// encryption using hashing and salt
+ 
 app.get('/',async(req,res)=>{
    try{
 
@@ -49,6 +51,13 @@ app.get('/',async(req,res)=>{
     res.status(500).send("Error hashing");
    }
 });
+
+// lets decrpyt the encrypted password or a string , we will compare
+app.get('/',async (req ,res)=>{
+    const result=await bcrypt.compare("marco-polo","$2b$10$brrd4wOim6fESmo6EApXR.QDZFwkvyhYsv0FgNQzG4vb3lgS/69Ra");
+    res.send(result);
+});
+
 app.listen(3000,()=>{
    console.log("Server  is running on port 3000 ");
 });
