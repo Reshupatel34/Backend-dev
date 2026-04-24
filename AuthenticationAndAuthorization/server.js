@@ -11,12 +11,13 @@
 
  
 import express from 'express';
-// import cookieParser  from 'cookie-parser';
+import cookieParser  from 'cookie-parser';
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
 
 const app=express();
 
-// app.use(cookieParser());
+app.use(cookieParser());
 
 // set cookie
 
@@ -37,25 +38,43 @@ const app=express();
 
 // encryption using hashing and salt
  
-app.get('/',async(req,res)=>{
-   try{
+// app.get('/',async(req,res)=>{
+//    try{
 
-    const salt=await bcrypt.genSalt(10);
-    const hash= await bcrypt.hash("marco-polo",salt);
+//     const salt=await bcrypt.genSalt(10);
+//     const hash= await bcrypt.hash("marco-polo",salt);
 
-    // hashed password
-    console.log(hash);
+//     // hashed password
+//     console.log(hash);
 
-   }catch(err){
-    console.log(err);
-    res.status(500).send("Error hashing");
-   }
-});
+//    }catch(err){
+//     console.log(err);
+//     res.status(500).send("Error hashing");
+//    }
+// });
+
+
 
 // lets decrpyt the encrypted password or a string , we will compare
-app.get('/',async (req ,res)=>{
-    const result=await bcrypt.compare("marco-polo","$2b$10$brrd4wOim6fESmo6EApXR.QDZFwkvyhYsv0FgNQzG4vb3lgS/69Ra");
-    res.send(result);
+// app.get('/',async (req ,res)=>{
+//     const result=await bcrypt.compare("marco-polo","$2b$10$brrd4wOim6fESmo6EApXR.QDZFwkvyhYsv0FgNQzG4vb3lgS/69Ra");
+//     res.send(result);
+// });
+
+
+
+// jwt 
+app.get('/',(req ,res)=>{
+   const token=jwt.sign({email:"reshu@gmail.com"},"secret");
+   res.cookie("token",token);
+   res.send("done");
+
+});
+
+app.get('/verify',(req ,res)=>{
+  const data=jwt.verify(req.cookies.token,"secret");
+  console.log(data);
+
 });
 
 app.listen(3000,()=>{
