@@ -11,26 +11,44 @@
 
  
 import express from 'express';
-import cookieParser  from 'cookie-parser';
+// import cookieParser  from 'cookie-parser';
 import bcrypt from "bcrypt";
 
 const app=express();
 
-app.use(cookieParser());
+// app.use(cookieParser());
 
 // set cookie
-app.get('/',(req ,res)=>{
-//    res.send("Welcome");
-res.cookie("name","Reshu");
-res.send("done");
-});
+
+// app.get('/',(req ,res)=>{
+// //    res.send("Welcome");
+// res.cookie("name","Reshu");
+// res.send("done");
+// });
 
 // read  cookies
-app.get('/read',(req,res)=>{
-    console.log(req.cookies);
-   res.send("Read Cookie Page");
-});
 
+
+// app.get('/read',(req,res)=>{
+//     console.log(req.cookies);
+//    res.send("Read Cookie Page");
+// });
+
+
+app.get('/',async(req,res)=>{
+   try{
+
+    const salt=await bcrypt.genSalt(10);
+    const hash= await bcrypt.hash("marco-polo",salt);
+
+    // hashed password
+    console.log(hash);
+
+   }catch(err){
+    console.log(err);
+    res.status(500).send("Error hashing");
+   }
+});
 app.listen(3000,()=>{
    console.log("Server  is running on port 3000 ");
 });
